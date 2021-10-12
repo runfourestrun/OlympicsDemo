@@ -41,42 +41,43 @@ MERGE (c:Country {name:row['NOC']})
 :param {file:'Coaches.csv'};
 /#################
 
-:param header => 'NOC';
 :param file => 'Coaches.csv';
+:param header => 'NOC';
 CALL apoc.load.csv($file, {header:true}) yield map as row
 MERGE (c:Country {name:row[$header]})
 
 
 
 //Trying to use APOC to speed up loading via Batch Processing
-// This works!!
 
-:param header => 'NOC';
+// Country Nodes
+
 :param file => 'Coaches.csv';
+:param header => 'NOC';
 CALL apoc.periodic.iterate (
 'CALL apoc.load.csv($file, {header:true}) yield map as row', 'MERGE (c:Country {name:row[$header]})', {batchSize:500,parrallel:true,params: {file:$file,header:$header}})
 
 
-//Now Let's Merge in the Coach Nodes
+//Coach Nodes
+// this works
 
-
-:param header => 'Name';
 :param file => 'Coaches.csv';
+:param header => 'Name';
 CALL apoc.periodic.iterate (
-'CALL apoc.load.csv($file, {header:true}) yield map as row', 'MERGE (c:Person:Coach {name:row[$header]})', {batchSize:500,parrallel:true,params: {file:$file,header:$header}})
+'CALL apoc.load.csv($file, {header:true}) yield map as row',
+'MERGE (c:Person:Coach {name:row[$header]})', {batchSize:500,parrallel:true,params: {file:$file,header:$header}})
 
 
 
 
-//Now we need to create relationships... the hard part...
+//Coach & Country Nodes
 
-
-
-
-
-
-
-
+:param file => 'Coaches.csv';
+:param country_name_header => 'NOC';
+:param coach_name_header => 'Name';
+CALL apoc.periodic.iterate (
+'CALL apoc.load.csv($file, {header:true}) yield map as row',
+'MERGE (c:Country {name:row[$country_name_header]})  MERGE (p:Person:Coach {name:row[$coach_name_header]})', {batchSize:500,parrallel:true,params: {file:$file,country_name_header:$country_name_header,coach_name_header:$coach_name_header}})
 
 
 
@@ -88,4 +89,21 @@ CALL apoc.periodic.iterate (
 //Why doesn't this work....
 //https://stackoverflow.com/questions/60575729/how-to-pass-multiple-parameters-to-the-neo4j-browser
 //:param [{file,header}] => {'Coaches.csv' as file,'NOC' as header}
+
+
+
+
+// Why doesn't this work...
+// I don't think I can have multiple statements with periodic iterate..
+:param file => 'Coaches.csv';
+:param country_name_header => 'NOC';
+:param coach_name_header => 'Name';
+CALL apoc.periodic.iterate (
+'CALL apoc.load.csv($file, {header:true}) yield map as row',
+'MERGE (c:Country {name:row[$country_name_header]}) MERGE (p:Person:Coach {name:row[$coach_name_header}])', {batchSize:500,parrallel:true,params: {file:$file,country_name_header:$country_name_header,coach_name_header:$coach_name_header}})
+
+
+
+
+
 
