@@ -1,4 +1,4 @@
 
 # Olympics Demo  
 
-![Data Model](Olympics.pnng)
+![Data Model](Olympics.png)
