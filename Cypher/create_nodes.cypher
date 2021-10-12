@@ -81,9 +81,65 @@ CALL apoc.periodic.iterate (
 
 
 
+// Coach,Country Nodes & :REPRESENTS Relationship
+:param file => 'Coaches.csv';
+:param country_name_header => 'NOC';
+:param coach_name_header => 'Name';
+CALL apoc.periodic.iterate (
+'CALL apoc.load.csv($file, {header:true}) yield map as row',
+'MERGE (c:Country {name:row[$country_name_header]})  MERGE (p:Person:Coach {name:row[$coach_name_header]})
+ MERGE (p) - [:REPRESENTS] -> (c)
+
+'
+, {batchSize:500,parallel:true,params: {file:$file,country_name_header:$country_name_header,coach_name_header:$coach_name_header}})
 
 
-// Let's create
+
+// Coach,Country,Discipline Labels/Nodes & :PARTICIPATES, :COACHES, :REPRESENTS Relationships
+// I Think this is accurate...
+// Helper Queries:
+// MATCH p1 = (p:Person{name:'MONTICO Loredana'}) - [:REPRESENTS] -> (c:Country) - [:PARTICIPATES] -> (d) RETURN p1
+//
+
+
+:param file => 'Coaches.csv';
+:param country_name_header => 'NOC';
+:param coach_name_header => 'Name';
+:param discipline_name_header => 'Discipline';
+CALL apoc.periodic.iterate (
+'CALL apoc.load.csv($file, {header:true}) yield map as row',
+'
+ MERGE (c:Country {name:row[$country_name_header]})
+ MERGE (p:Person:Coach {name:row[$coach_name_header]})
+ MERGE (d:Discipline {name:row[$discipline_name_header]})
+ MERGE (p) - [:COACHES] -> (d)
+ MERGE (c) - [:PARTICIPATES] -> (d)
+ MERGE (p) - [:REPRESENTS] -> (c)
+'
+, {batchSize:500,parallel:true,params: {file:$file,country_name_header:$country_name_header,coach_name_header:$coach_name_header,discipline_name_header:$discipline_name_header}})
+
+
+
+// Let's introduce a second CSV file... :/
+
+
+:param file => 'Athletes.csv';
+:param country_name_header => 'NOC';
+:param coach_name_header => 'Name';
+:param discipline_name_header => 'Discipline';
+CALL apoc.periodic.iterate (
+'CALL apoc.load.csv($file, {header:true}) yield map as row',
+'
+
+
+
+
+
+
+'
+, {batchSize:500,parallel:true,params: {file:$file,country_name_header:$country_name_header,coach_name_header:$coach_name_header,discipline_name_header:$discipline_name_header}})
+
+
 
 
 //Why doesn't this work....
@@ -91,16 +147,6 @@ CALL apoc.periodic.iterate (
 //:param [{file,header}] => {'Coaches.csv' as file,'NOC' as header}
 
 
-
-
-// Why doesn't this work...
-// I don't think I can have multiple statements with periodic iterate..
-:param file => 'Coaches.csv';
-:param country_name_header => 'NOC';
-:param coach_name_header => 'Name';
-CALL apoc.periodic.iterate (
-'CALL apoc.load.csv($file, {header:true}) yield map as row',
-'MERGE (c:Country {name:row[$country_name_header]}) MERGE (p:Person:Coach {name:row[$coach_name_header}])', {batchSize:500,parrallel:true,params: {file:$file,country_name_header:$country_name_header,coach_name_header:$coach_name_header}})
 
 
 

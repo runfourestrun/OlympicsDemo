@@ -41,14 +41,3 @@ if __name__ == '__main__':
         my_csv_file.close()
 
 
-
-    #     wb = xlrd.open_workbook(file)
-    #
-    #     csv_file = open()
-    #     for row in data:
-    #         l = list(row)
-    #         print(l)
-
-
-
-
