@@ -125,12 +125,12 @@ CALL apoc.periodic.iterate (
 
 :param file => 'Athletes.csv';
 :param country_name_header => 'NOC';
-:param coach_name_header => 'Name';
+:param player_name_header => 'Name';
 :param discipline_name_header => 'Discipline';
 CALL apoc.periodic.iterate (
 'CALL apoc.load.csv($file, {header:true}) yield map as row',
 '
-
+MERGE (p:Person:Athlete {name:row[$player_name_header]})
 
 
 
