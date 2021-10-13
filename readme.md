@@ -41,5 +41,6 @@ First attempt at creating a Neo4j Graph from multiple, disparate/disjointed data
 
 
 ![Data Model](images/Olympics-2.png)
+![Data Model2](images/Olympics3.png)
 
 
