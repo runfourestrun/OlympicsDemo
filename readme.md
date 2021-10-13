@@ -15,7 +15,7 @@
 
 
 
-![Data Model](images/Olympics_data_model.png)
+![Data Model](images/Olympics_Data_Model.png)
 
 
 ## Alternative Data Models
