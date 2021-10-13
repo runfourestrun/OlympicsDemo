@@ -16,6 +16,7 @@ First attempt at creating a Neo4j Graph from multiple, disparate/disjointed data
 *  The data model doesn't seem to be right... 
 *  The data was loaded improperly and isn't consistent/correct (see screenshot below)
 
+!(images/somethingwrong.png)
 
 
 
@@ -39,6 +40,6 @@ First attempt at creating a Neo4j Graph from multiple, disparate/disjointed data
 
 
 
-![Data Model](images/Olympics_data_model2.png)
+![Data Model](images/Olympics_Data_Model2.png)
 
 
