@@ -31,7 +31,8 @@ First attempt at creating a Neo4j Graph from multiple, disparate/disjointed data
 
 
 ## Data Model
-
+* Issues:
+* There seems like there are a lot of circular relationships - not sure if that is best practice...
 
 ![Data Model](images/Olympics_Data_Model.png)
 
@@ -40,7 +41,18 @@ First attempt at creating a Neo4j Graph from multiple, disparate/disjointed data
 
 
 
+### Alternative 1: 
+
+#### Issues:
+* Logically doesn't really make a ton of sense... what do you do with country
 ![Data Model](images/Olympics-2.png)
+
+
+### Alternative 2:
+
+#### Issues:
+* This might be better. I'm trying to create an 'intermediate node' or 'hyperedge'. Don't think I'm implementing correctly though...
+
 ![Data Model2](images/Olympics-3.png)
 
 
