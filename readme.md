@@ -31,7 +31,7 @@ First attempt at creating a Neo4j Graph from multiple, disparate/disjointed data
 
 
 ## Data Model
-* Issues:
+#### Issues:
 * There seems like there are a lot of circular relationships - not sure if that is best practice...
 
 ![Data Model](images/Olympics_Data_Model.png)
