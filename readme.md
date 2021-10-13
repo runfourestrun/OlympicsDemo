@@ -9,6 +9,10 @@ First attempt at creating a Neo4j Graph from multiple, disparate/disjointed data
 * Logic is all written in Cypher (/Cypher) 
 * Orchestrated externally via apache airflow 
 
+## Source Files: 
+
+s3://neo4j-alexanderfournier/Demos/Olympics/
+
 
 ## Issues:
 
