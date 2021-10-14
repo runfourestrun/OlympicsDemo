@@ -137,7 +137,7 @@ MERGE (p) - [:REPRESENTS] -> (c)
 MERGE (p) - [:PLAYS] -(d)
 MERGE (c) - [:PARTICIPATES] -> (d)
 '
-, {batchSize:500,parallel:true,params: {file:$file,country_name_header:$country_name_header,coach_name_header:$coach_name_header,discipline_name_header:$discipline_name_header}})
+, {batchSize:500,parallel:true,params: {file:$file,country_name_header:$country_name_header,player_name_header:$player_name_header,discipline_name_header:$discipline_name_header}})
 
 
 
